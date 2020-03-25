@@ -37,7 +37,7 @@ pub struct EnhancedPacketBlock<'a> {
 
 impl<'a> EnhancedPacketBlock<'a> {
 
-    fn timestamp(&self) -> Duration {
+    pub fn timestamp(&self) -> Duration {
         Duration::from_nanos(self.timestamp)
     }
 }
