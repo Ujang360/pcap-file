@@ -11,7 +11,7 @@ use std::time::Duration;
 
 /// An Enhanced Packet Block (EPB) is the standard container for storing the packets coming from the network.
 #[derive(Clone, Debug, IntoOwned, Eq, PartialEq)]
-pub struct EnhancedPacketBlock<'a> {
+pub struct EnhancedPacketBlock<'a, 'b> {
 
     /// It specifies the interface this packet comes from.
     /// The correct interface will be the one whose Interface Description Block
@@ -32,17 +32,17 @@ pub struct EnhancedPacketBlock<'a> {
     pub data: Cow<'a, [u8]>,
 
     /// Options
-    pub options: Vec<EnhancedPacketOption<'a>>
+    pub options: Vec<EnhancedPacketOption<'b>>
 }
 
-impl<'a> EnhancedPacketBlock<'a> {
+impl<'a, 'b> EnhancedPacketBlock<'a, 'b> {
 
     pub fn timestamp(&self) -> Duration {
         Duration::from_nanos(self.timestamp)
     }
 }
 
-impl<'a> PcapNgBlock<'a> for EnhancedPacketBlock<'a> {
+impl<'a> PcapNgBlock<'a> for EnhancedPacketBlock<'a, 'a> {
 
     const BLOCK_TYPE: BlockType = BlockType::EnhancedPacket;
 
